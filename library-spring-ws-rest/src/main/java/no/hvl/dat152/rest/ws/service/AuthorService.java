@@ -33,10 +33,19 @@ public class AuthorService {
 	}
 	
 	// TODO public saveAuthor(Author author)
-		
+	public Author saveAuthor(Author author) {
+		return authorRepository.save(author);
+	}
 	
 	// TODO public Author updateAuthor(Author author, int id)
-		
+	public Author updateAuthor(Author author, Long id) {
+		Author authorUpdate = authorRepository.findById(id).orElse(null);
+
+		authorUpdate.setFirstname(author.getFirstname());
+		authorUpdate.setLastname(author.getLastname());
+
+		return authorRepository.save(authorUpdate);
+	}
 	
 	// TODO public List<Author> findAll()
 	
