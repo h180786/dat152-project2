@@ -49,13 +49,38 @@ public class BookService {
 	}
 	
 	// TODO public Book updateBook(Book book, String isbn)
+	public Book updateBook(Book book, String isbn) {
+		Book bookToUpdate = bookRepository.findBookByISBN(isbn);
+		bookToUpdate.setTitle(book.getTitle());
+		return bookRepository.save(bookToUpdate);
+	}
 	
 	// TODO public List<Book> findAllPaginate(Pageable page)
+	public List<Book> findAllPaginate(Pageable page) {
+		Page<Book> books = bookRepository.findAll(page);
+		return books.getContent();
+	}
 	
 	// TODO public Set<Author> findAuthorsOfBookByISBN(String isbn)
+	public Set<Author> findAuthorsOfBookByISBN(String isbn) {
+		Book book = bookRepository.findBookByISBN(isbn);
+		return book.getAuthors();
+	}
 	
 	// TODO public void deleteById(long id)
+	public void deleteById(long id) {
+		Book book = bookRepository.findById(id).orElse(null);
+		if (book != null) {
+			bookRepository.delete(book);
+		}
+	}
 	
-	// TODO public void deleteByISBN(String isbn) 
+	// TODO public void deleteByISBN(String isbn)
+	public void deleteByISBN(String isbn) {
+		Book book = bookRepository.findBookByISBN(isbn);
+		if (book != null) {
+			bookRepository.delete(book);
+		}
+	}
 	
 }

@@ -48,10 +48,21 @@ public class AuthorService {
 	}
 	
 	// TODO public List<Author> findAll()
+	public List<Author> findAll() {
+		return (List<Author>) authorRepository.findAll();
+	}
 	
 	
-	// TODO public void deleteById(Long id) throws AuthorNotFoundException 
+	// TODO public void deleteById(Long id) throws AuthorNotFoundException
+	public void deleteById(Long id) throws AuthorNotFoundException {
+		Author author = authorRepository.findById(id).orElseThrow(()-> new AuthorNotFoundException("Author with the id: "+id+ "not found!"));
+		authorRepository.delete(author);
+	}
 
 	
 	// TODO public Set<Book> findBooksByAuthorId(Long id)
+	public Set<Book> findBooksByAuthorId(Long id) {
+		Author author = authorRepository.findById(id).orElse(null);
+		return author.getBooks();
+	}
 }
